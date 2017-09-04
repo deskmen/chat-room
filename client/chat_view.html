@@ -6,7 +6,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>聊天室</title>
+    <title>chat room</title>
 
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="font-awesome/css/font-awesome.css" rel="stylesheet">
@@ -33,16 +33,16 @@
                 <div class="">
 
                     <div class="ibox-title">
-                         <span class="text-center">群聊室</span>
+                         <span class="text-center">chat room</span>
                     </div>
 
 
                     <div class="ibox-content">
-                                    <!-- <input type="text" name="name" placeholder="输入名称" class="form-control" id="name"> -->
+                                 
                                     <div class="input-group">
-                                        <input type="text" class="form-control" placeholder="输入名称" name="name" id="name">
+                                        <input type="text" class="form-control" placeholder="input your name" name="name" id="name">
                                         <span class="input-group-btn">
-                                        <button class="btn btn-primary" type="button" onclick="openConnection('login')">确定修改</button>
+                                        <button class="btn btn-primary" type="button" onclick="openConnection('login')">set name</button>
                                         </span>
                                     </div><!-- /input-group -->
                         <div class="row">
@@ -76,7 +76,7 @@
 
                                         <textarea class="form-control message-input" name="message" placeholder="Enter message text" id="msg"></textarea>
                                     </div>
-                                    <button class="btn btn-primary" onclick="openConnection('net')">发送</button>
+                                    <button class="btn btn-primary" onclick="openConnection('net')">send</button>
                                 </div>
                             </div>
                         </div>
@@ -184,9 +184,9 @@
                     sock_msg = data["data"]  
                     chat_users = data["chat_users"]
                     if (sock_msg == "login") {
-                        $("#group_chat").append("<p class='text-center'><font color='green'>"+sock_name+"上线了"+"</font></p>")
+                        $("#group_chat").append("<p class='text-center'><font color='green'>"+sock_name+"online"+"</font></p>")
                     }else if(sock_msg == "logout"){
-                        $("#group_chat").append("<p class='text-center'><font color='red'>"+sock_name+"下线了"+"</font></p>")
+                        $("#group_chat").append("<p class='text-center'><font color='red'>"+sock_name+"offine"+"</font></p>")
                     }else{
                         if (sock_name == name){
                             speak_head = "<div class='chat-message left'><img class='message-avatar' src='img/a1.jpg' alt='' ><div class='message'>"
@@ -215,7 +215,7 @@
             }else if(chat_type == "single"){
                 console.log(data)
                 document.getElementById("new_msg_time").innerHTML = time
-                document.getElementById("new_message").innerHTML = "新消息"
+                document.getElementById("new_message").innerHTML = "new messages"
                 msg = data["msg"]
                 name = data["name"]
                 talk_name = data["talk_name"]
@@ -245,7 +245,7 @@
                 var e = JSON.stringify(data_arr)
                 conn.send(e);  
             } else {  
-                alert("连接失败!");  
+                alert("connection failed!");  
             }  
         }
 

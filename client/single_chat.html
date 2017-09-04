@@ -6,7 +6,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>聊天室</title>
+    <title>chat room</title>
 
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="font-awesome/css/font-awesome.css" rel="stylesheet">
@@ -38,9 +38,9 @@
 
 
                     <div class="ibox-content">
-                                    <!-- <input type="text" name="name" placeholder="输入名称" class="form-control" id="name"> -->
+                                    
                                     <div class="input-group">
-                                        <input type="text" class="form-control" placeholder="输入名称" name="name" id="name" readonly>
+                                        <input type="text" class="form-control" placeholder="input your name" name="name" id="name" readonly>
                                         </span>
                                     </div><!-- /input-group -->
                         <div class="row">
@@ -74,7 +74,7 @@
 
                                         <textarea class="form-control message-input" name="message" placeholder="Enter message text" id="msg"></textarea>
                                     </div>
-                                    <button class="btn btn-primary" onclick="openConnection('net')">发送</button>
+                                    <button class="btn btn-primary" onclick="openConnection('net')">send</button>
                                 </div>
                             </div>
                         </div>
@@ -145,7 +145,7 @@
 
 
     	function GetRequest() { 
-			var url = location.search; //获取url中"?"符后的字串 
+			var url = location.search;  
 			var theRequest = new Object(); 
 			if (url.indexOf("?") != -1) { 
 				var str = url.substr(1); 

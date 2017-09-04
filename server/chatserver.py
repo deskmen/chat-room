@@ -33,10 +33,10 @@ class websocket_thread(threading.Thread):
         	username = finally_data["name"]
         	chat_type = finally_data["chat_type"]
         	if chat_type == "single":
-        		talk_name = finally_data["talk_name"]
-        		req = sock_utils.Req_Method(self.connection,username,chat_type,talk_name)
+                talk_name = finally_data["talk_name"]
+                req = sock_utils.Req_Method(self.connection,username,chat_type,talk_name)
         	elif chat_type == "group":
-            	req = sock_utils.Req_Method(self.connection,username,chat_type)
+                req = sock_utils.Req_Method(self.connection,username,chat_type)
         	sock_result = getattr(req,sock_type)
         	sock_result(finally_data)
 

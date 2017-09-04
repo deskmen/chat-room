@@ -45,16 +45,14 @@ class Req_Method(object):
 	def lost(self,*args,**kwargs):
 		finally_data = args[0]
 		name = finally_data["name"]
-		logging.waring(finally_data)
 		if self.sock_list.has_key(name):
 			self.sock_list[name].close()
 			self.sock_list.pop(name)
 	def single_chat(self,*args,**kwargs):
 		finally_data = args[0]
-                msg = finally_data["chat_content"]
-                name = finally_data["name"]
-                talk_name = finally_data["talk_name"]
-		logging.warning(self.single_chat_list)
+		msg = finally_data["chat_content"]
+		name = finally_data["name"]
+		talk_name = finally_data["talk_name"]
 		name_to_talk_list = map(lambda x:(str(x["name"]),str(x["talk_name"])),self.single_chat_list)
 		if (name,talk_name) in name_to_talk_list:
 			single_talk_index = name_to_talk_list.index((name,talk_name))
@@ -72,5 +70,4 @@ class Req_Method(object):
 			talk_name_to_name = name_to_talk_list.index((talk_name,name))
 			talk_sock = self.single_chat_list[talk_name_to_name]["name_sock"]
 			WebSocket.send(talk_sock, json.dumps(return_talk))
-		logging.warning(self.single_chat_list)
 		WebSocket.send(talk_info["name_sock"], json.dumps(return_talk))

@@ -23,21 +23,20 @@ class websocket_thread(threading.Thread):
         self.connection = connection
 
     def run(self):
-        #reload(sock_utils)
-	while 1:
+        while 1:
         	data = WebSocket.recv(self.connection)
         	finally_data = json.loads(data)
         	if not finally_data.has_key("sock_type"):
-            		WebSocket.send(self.connection, json.dumps({"code":0,"msg":"没有请求方法"}))
-            		self.connection.close()
+        		WebSocket.send(self.connection, json.dumps({"code":0,"msg":"没有请求方法"}))
+        		self.connection.close()
         	sock_type = finally_data["sock_type"]
         	username = finally_data["name"]
         	chat_type = finally_data["chat_type"]
-		if chat_type == "single":
+        	if chat_type == "single":
         		talk_name = finally_data["talk_name"]
         		req = sock_utils.Req_Method(self.connection,username,chat_type,talk_name)
-		elif chat_type == "group":
-        		req = sock_utils.Req_Method(self.connection,username,chat_type)
+        	elif chat_type == "group":
+            	req = sock_utils.Req_Method(self.connection,username,chat_type)
         	sock_result = getattr(req,sock_type)
         	sock_result(finally_data)
 

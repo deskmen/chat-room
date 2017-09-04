@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>聊天室</title>
+
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="font-awesome/css/font-awesome.css" rel="stylesheet">
+
+    <link href="css/animate.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+
+</head>
+
+<body onunload="openConnection('logout')">
+
+
+
+
+
+
+
+
+
+   
+    <div class="row">
+        <div class="col-lg-12">
+
+                <div class="">
+
+                    <div class="ibox-title">
+                         <span class="text-center">群聊室</span>
+                    </div>
+
+
+                    <div class="ibox-content">
+                                    <!-- <input type="text" name="name" placeholder="输入名称" class="form-control" id="name"> -->
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" placeholder="输入名称" name="name" id="name">
+                                        <span class="input-group-btn">
+                                        <button class="btn btn-primary" type="button" onclick="openConnection('login')">确定修改</button>
+                                        </span>
+                                    </div><!-- /input-group -->
+                        <div class="row">
+
+                            <div class="col-md-9 ">
+                                <div class="chat-discussion" id="group_chat">
+
+                                   
+
+                                </div>
+
+                            </div>
+                            <div class="col-md-3">
+                                <div class="chat-users">
+
+
+                                    <div class="users-list" id="chat_users">
+                                       
+
+
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="chat-message-form">
+
+                                    <div class="form-group">
+
+                                        <textarea class="form-control message-input" name="message" placeholder="Enter message text" id="msg"></textarea>
+                                    </div>
+                                    <button class="btn btn-primary" onclick="openConnection('net')">发送</button>
+                                </div>
+                            </div>
+                        </div>
+
+    <div class="small-chat-box fadeInRight animated">
+
+        <div class="heading" draggable="true">
+            <small class="chat-date pull-right" id="new_msg_time">
+               
+            </small>
+            Small chat
+        </div>
+
+        <div class="content" id="new_msg_content">
+
+            
+            
+        </div>
+        <div class="form-chat">
+            <div class="input-group input-group-sm">
+                <!-- <input type="text" class="form-control"> <span class="input-group-btn"> <button
+                    class="btn btn-primary" type="button">Send -->
+            </button> </span></div>
+        </div>
+
+    </div>
+    <div id="small-chat">
+
+        <span class="badge badge-warning pull-right" id="new_message"></span>
+        <a class="open-small-chat">
+            <i class="fa fa-comments"></i>
+
+        </a>
+    </div>
+
+                        <br>
+                        <br>
+                        <br>
+                        <br><br>
+                        <br>
+                        <br>
+                        <br><br>
+                        <br>
+                        <br>
+                        <br><br>
+                        <br>
+                        <br>
+                        <br><br>
+                        <br>
+                        <br>
+                        <br><br>
+                        <br>
+                        <br>
+                        <br><br>
+                        <br>
+                        <br>
+                        <br><br>
+                        <br>
+                        <br>
+                        <br>
+                    </div>
+
+                </div>
+        </div>
+
+    </div>
+
+
+
+
+
+
+
+
+
+<!-- Mainly scripts -->
+<script src="js/jquery-2.1.1.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/plugins/metisMenu/jquery.metisMenu.js"></script>
+<script src="js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+
+<!-- Custom and plugin javascript -->
+<script src="js/inspinia.js"></script>
+<script src="js/plugins/pace/pace.min.js"></script>
+
+<script src="js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+
+
+<script type="text/javascript">
+    var conn = new WebSocket('ws://139.196.254.84:7002/');
+
+
+
+        conn.onopen = function () {
+
+        };
+        conn.onmessage = function (event) {
+            document.getElementById('msg').value = "";
+            var name=document.getElementById("name").value;
+            data = $.parseJSON(event.data);
+            var time = getNowFormatDate()
+            chat_type = data["chat_type"]
+            if (chat_type == "group"){
+                    sock_name = data["name"]
+                    sock_msg = data["data"]  
+                    chat_users = data["chat_users"]
+                    if (sock_msg == "login") {
+                        $("#group_chat").append("<p class='text-center'><font color='green'>"+sock_name+"上线了"+"</font></p>")
+                    }else if(sock_msg == "logout"){
+                        $("#group_chat").append("<p class='text-center'><font color='red'>"+sock_name+"下线了"+"</font></p>")
+                    }else{
+                        if (sock_name == name){
+                            speak_head = "<div class='chat-message left'><img class='message-avatar' src='img/a1.jpg' alt='' ><div class='message'>"
+                            speak_name = "<a class='message-author' href='#'>" +sock_name+"</a><span class='message-date'>"+time+"</span>"
+                            speak_content = "<span class='message-content'>"+sock_msg+"</span></div></div>"
+                            $("#group_chat").append(speak_head+speak_name+speak_content)
+                        }else{
+                            speak_head = "<div class='chat-message right'><img class='message-avatar' src='img/a3.jpg' alt='' ><div class='message'>"
+                            speak_name = "<a class='message-author' href='#'>" +sock_name+"</a><span class='message-date'>"+time+"</span>"
+                            speak_content = "<span class='message-content'>"+sock_msg+"</span></div></div>"
+                            $("#group_chat").append(speak_head+speak_name+speak_content)
+                        }
+                    };   
+                    
+                    document.getElementById("chat_users").innerHTML = ""
+                    for (var i = 0; i < chat_users.length; i++) {
+                        online_head = "<div class='chat-user'><span class='pull-right label label-primary'>Online</span><img class='chat-avatar' src='img/a1.jpg' alt='' ><div class='chat-user-name'>"
+                        if (chat_users[i] == name) {
+                            online_user = "<a  href='#'>"+chat_users[i]+"</a></div></div>"
+                        } else{
+                            online_user = "<a target='_blank' href='single_chat.html?talk_name="+chat_users[i]+"&curent_name="+name+"'>"+chat_users[i]+"</a></div></div>"
+                        };
+                        
+                        $("#chat_users").append(online_head+online_user)
+                    }; 
+            }else if(chat_type == "single"){
+                console.log(data)
+                document.getElementById("new_msg_time").innerHTML = time
+                document.getElementById("new_message").innerHTML = "新消息"
+                msg = data["msg"]
+                name = data["name"]
+                talk_name = data["talk_name"]
+                new_msg_head = "<div class='left'><div class='author-name'><a target='_blank' href='single_chat.html?talk_name="+name+"&curent_name="+talk_name+"'>"+name+"</a></div><div class='chat-message active'>"+msg+"</div></div>"
+                $("#new_msg_content").append(new_msg_head)
+
+            }
+            
+
+        };
+        conn.onclose = function (event) {
+            conn.close();
+        };
+
+
+        function openConnection(str){
+            var name=document.getElementById("name").value;
+            if (conn.readyState == conn.OPEN) { 
+                if (str == "login") {
+                    msg = str
+                } else if (str == "logout"){
+                    msg= str
+                } else{
+                    var msg=document.getElementById("msg").value;
+                };
+                var data_arr = {"chat_content":msg,"sock_type":"test","name":name,"chat_type":"group"}
+                var e = JSON.stringify(data_arr)
+                conn.send(e);  
+            } else {  
+                alert("连接失败!");  
+            }  
+        }
+
+
+    function getNowFormatDate() {
+        var date = new Date();
+        var seperator1 = "-";
+        var seperator2 = ":";
+        var month = date.getMonth() + 1;
+        var strDate = date.getDate();
+        if (month >= 1 && month <= 9) {
+            month = "0" + month;
+        }
+        if (strDate >= 0 && strDate <= 9) {
+            strDate = "0" + strDate;
+        }
+        var currentdate = date.getFullYear() + seperator1 + month + seperator1 + strDate
+                + " " + date.getHours() + seperator2 + date.getMinutes()
+                + seperator2 + date.getSeconds();
+        return currentdate;
+    }
+
+
+
+</script>
+
+
+
+
+
+
+</body>
+
+</html>
